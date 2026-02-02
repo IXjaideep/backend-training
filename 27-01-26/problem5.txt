@@ -1,0 +1,7 @@
+1, Ram ,22
+2, Ravi,17
+3, Raju ,22
+x, John,25
+4, jai,67
+5, rahul,98
+6, ramu,44
