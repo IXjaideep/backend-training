@@ -19,6 +19,18 @@ public class problem5 {
     static String removemultiplespaces(String s) {
         return s.replaceAll("\\s+", " ").trim();
     }
+    static void writeToFile(String path, List<String> records) {
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+            for (String r : records) {
+                bw.write(r); 
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            Logger.getLogger(problem5.class.getName())
+                  .severe("Error writing file: " + e.getMessage());
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -31,13 +43,13 @@ public class problem5 {
             while ((record = br.readLine()) != null) {
                 try { 
                     record = removemultiplespaces(record);
-                    String[] fields = record.split(","); 
-                    if (fields.length != 3) { 
+                    String[] arr = record.split(","); 
+                    if (arr.length != 3) { 
                         throw new IllegalArgumentException("Invalid record format");
                     }
-                    String idStr = fields[0].trim(); 
-                    String name = fields[1].trim();
-                    String ageStr = fields[2].trim();
+                    String idStr = arr[0].trim(); 
+                    String name = arr[1].trim();
+                    String ageStr = arr[2].trim();
                     Integer id = Integer.valueOf(idStr);
                     Integer age = Integer.valueOf(ageStr);
 
@@ -49,7 +61,11 @@ public class problem5 {
                 } catch (NumberFormatException e) { 
                     Invalid.add(record + " --> Invalid numeric value");
                     logger.warning("Invalid number in record: " + record);
-                } catch (InvalidAgeException | IllegalArgumentException e) {
+                } catch (InvalidAgeException e) {
+                    Invalid.add(record + " --> " + e.getMessage());
+                    logger.warning(e.getMessage() + " in record: " + record);
+                }
+                catch (IllegalArgumentException e) {
                     Invalid.add(record + " --> " + e.getMessage());
                     logger.warning(e.getMessage() + " in record: " + record);
                 }
@@ -64,17 +80,5 @@ public class problem5 {
 
         writeToFile(validFile, Valid);
         writeToFile(invalidFile, Invalid);
-        logger.info("File processing completed successfully");
-    }
-    private static void writeToFile(String path, List<String> records) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            for (String r : records) {
-                bw.write(r); 
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            Logger.getLogger(problem5.class.getName())
-                  .severe("Error writing file: " + e.getMessage());
-        }
     }
 }
