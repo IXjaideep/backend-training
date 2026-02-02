@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.HashMap;
 
 class NoMatter extends Exception {
     public NoMatter(String msg) {
@@ -13,6 +14,7 @@ public class problem1 {
         }
     }
     public static void main(String[] args){
+        HashMap<String,Integer> map =new HashMap<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader("problem1.txt"));
             BufferedWriter bw  = new BufferedWriter(new FileWriter("ReverseProblem1.txt"));
@@ -20,6 +22,7 @@ public class problem1 {
             int Noline = 0;
             int NoWords = 0;
             int NoCharaters = 0;
+            StringBuffer b = new StringBuffer();
             EmptyFile(br.read());
             while ((line = br.readLine()) != null)
             {
@@ -28,6 +31,12 @@ public class problem1 {
                 for (int i = 0; i < line.length(); i++) {
                     if (line.charAt(i) == ' ') {
                         NoWords++;
+                        map.put(b.toString(),map.getOrDefault(b,0)+1);
+                        b.delete(0, b.length());
+                    }
+                    else{
+                        char one = line.charAt(i);
+                        b.append(one);
                     }
                 }
 
