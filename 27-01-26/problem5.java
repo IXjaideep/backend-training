@@ -59,14 +59,14 @@ public class problem5 {
                     }
                     Valid.add(id + "," + name + "," + age);
                 } catch (NumberFormatException e) { 
-                    Invalid.add(record + " --> Invalid numeric value");
+                    Invalid.add(record + " : Invalid numeric value");
                     logger.warning("Invalid number in record: " + record);
                 } catch (InvalidAgeException e) {
-                    Invalid.add(record + " --> " + e.getMessage());
+                    Invalid.add(record + e.getMessage());
                     logger.warning(e.getMessage() + " in record: " + record);
                 }
                 catch (IllegalArgumentException e) {
-                    Invalid.add(record + " --> " + e.getMessage());
+                    Invalid.add(record + e.getMessage());
                     logger.warning(e.getMessage() + " in record: " + record);
                 }
             }
