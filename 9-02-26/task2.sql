@@ -15,7 +15,7 @@ LEFT JOIN order_items o ON c.customer_id = o.customer_id
 
 --3)Filter joined rows using WHERE amount > X
 
-SELECT c.name,c.city,p.product_name, o.order_date,o.order_place,p.product_cost FROM customers c
+SELECT c  .name,c.city,p.product_name, o.order_date,o.order_place,p.product_cost FROM customers c
 LEFT JOIN products p ON c.customer_id = p.customer_id
 LEFT JOIN order_items o ON c.customer_id = o.customer_id
 WHERE P.product_cost > 12000

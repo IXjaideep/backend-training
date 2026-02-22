@@ -1,7 +1,7 @@
 use ecommerce
 
 --1)Order count per customer
-SELECT o.customer_id,count(o.customer_id) as count_per_customer FROM customers c
+SELECT o.customer_id,count(o.order_id) as count_per_customer FROM customers c
 LEFT JOIN order_items o ON c.customer_id = o.customer_id
 group by o.customer_id
 
@@ -34,14 +34,14 @@ GROUP BY d.dept_id
 
 use ecommerce
 
-SELECT o.customer_id,SUM(o.quantity) AS total_quantity FROM order_items o
+SELECT o.customer_id,SUM(o.order_id) AS total_quantity FROM order_items o
 LEFT JOIN products p ON o.customer_id = p.customer_id
 GROUP BY o.customer_id
 having SUM(o.quantity) > 3
 
 -- 2)Products ordered more than 10 times
 
-SELECT p.product_id,count(order_id) AS Product_order_count FROM products p
+SELECT p.product_id,count(o.quantity) AS Product_order_count FROM products p
 LEFT JOIN order_items o ON p.customer_id = o.customer_id
 GROUP BY p.product_id
 having count(order_id) >= 10

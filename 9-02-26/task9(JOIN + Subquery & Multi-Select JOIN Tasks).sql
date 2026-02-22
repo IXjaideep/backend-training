@@ -8,7 +8,7 @@ WHERE customer_id IN (
     FROM order_items
 )
 
---Customers whose id NOT IN (select customer_id from orders)
+--Customers whose id NOT IN (select customer_id from orders)o
 SELECT * FROM customers
 WHERE customer_id NOT IN (
 	SELECT customer_id
@@ -40,7 +40,7 @@ left join products p on o.customer_id =p.customer_id
 WHERE p.product_cost > (
 	SELECT avg(product_cost) 
 	FROM products
-	)
+	)   
 
 --Customers who placed orders above average order value
 
@@ -90,4 +90,4 @@ CASE
 	WHEN name like 'j%' then 'start with J'
 	WHEN name like 'A%' then 'start with A'
 	WHEN name like '%H' then 'end with h'
-END AS start_with FROM customers
+END AS start_with FROM customers;

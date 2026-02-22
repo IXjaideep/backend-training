@@ -10,7 +10,7 @@ CREATE table customers(
 	deliver_status VARCHAR(255),
 	customer_status VARCHAR(255),
 	);
-
+   
 CREATE table products(
 	product_id INT PRIMARY KEY,
 	customer_id INT,

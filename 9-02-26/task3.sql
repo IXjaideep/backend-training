@@ -23,12 +23,12 @@
   --4) Departments without employees
   SELECT d.dept_name,e.emp_name FROM departments d
   LEFT JOIN employees e ON d.dept_id = e.dept_id
-    WHERE e.dept_id IS NOT NULL
+    WHERE e.emp_id IS NOT NULL
 
  --5)All departments with employees
   SELECT d.dept_name,e.emp_name FROM departments d
   LEFT JOIN employees e ON d.dept_id = e.dept_id
-  WHERE e.dept_id IS NULL
+  WHERE e.emp_id IS NOT NULL
 
   --6)LEFT JOIN with LIKE filter
    SELECT d.dept_name,e.emp_name FROM departments d
