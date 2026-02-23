@@ -29,4 +29,3 @@ SELECT shipment_id,SUM(claimed_amount)
 FROM claim 
 GROUP BY shipment_id
 
-

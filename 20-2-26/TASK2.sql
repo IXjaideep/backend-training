@@ -1,4 +1,5 @@
 --TASK2  INSERSTING ALL VALUES INTO THE TABLE 
+use insurance
 
 INSERT INTO shipment VALUES 
 (1,101,201,'jannu','Rahul'),
@@ -130,8 +131,19 @@ FROM decision d
 JOIN claim c ON d.claim_id = c.claim_id
 WHERE d.approved_amount IS NULL;
 
+
+-- task 8 updating claim_histroy
+
+SELECT count(decision_status) FROM decision where decision_status = 'Approved'
+
+INSERT INTO claim_histroy(claim_id,decision_id) 
+SELECT claim_id,decision_id FROM
+decision WHERE decision_status = 'Approved'
+
 SELECT * FROM shipment
 SELECT * FROM company_policy
 SELECT * FROM claim
 SELECT * FROM evidence
 SELECT * FROM decision
+SELECT * FROM claim_histroy
+

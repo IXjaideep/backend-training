@@ -41,3 +41,12 @@ CREATE TABLE decision (
 	approved_amount	INT,
 	FOREIGN KEY (claim_id) REFERENCES claim(claim_id)
 	);
+
+CREATE TABLE claim_histroy(
+	histroy_id INT IDENTITY(1,1) PRIMARY KEY,
+	claim_id int,
+	decision_id int,
+	FOREIGN KEY (claim_id) REFERENCES claim(claim_id),
+	FOREIGN KEY(decision_id) REFERENCES decision(decision_id)
+);
+
