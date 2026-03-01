@@ -1,17 +1,23 @@
 --TASK2  INSERSTING ALL VALUES INTO THE TABLE 
 use insurance
 
+INSERT INTO shipment_agency VALUES
+(201,'rrr_agency',1,'1-3'),
+(202,'pusha_agency',2,'4-6'),
+(203,'bahubali_agency',3,'7-9'),
+(204,'varanasi_agency',4,'10-14');
+
 INSERT INTO shipment VALUES 
-(1,101,201,'jannu','Rahul'),
-(2,102,202,'sahit','ravi'),
-(3,103,203,'jai','pari'),
-(4,104,204,'bunny','mahesh'),
-(5,105,205,'akshay','nadhu'),
-(6,106,206,'srikar','tina'),
-(7,107,207,'yashwitha','vyshan'),
-(8,108,208,'sasu','fazin'),
-(9,109,209,'abhi','akansha'),
-(10,110,210,'uday','kiran');
+(1,101,201,'jannu','vignesh','jannu@gmail.com'),
+(2,102,201,'sahit','ravi','sahit@gmail.com'),
+(3,103,201,'jai','girish','jai@gmail.com'),
+(4,104,202,'bunny','abhi','bunny@gmail.com'),
+(5,105,202,'akshay','mahesh','akshay@gmail.com'),
+(6,106,202,'srikar','snigdha','srikar@gmail.com'),
+(7,107,203,'yashwitha','venkat','yashwitha@gmail.com'),
+(8,108,203,'sasu','sahit','sasu@gmail.com'),
+(9,109,203,'abhi','rishi','abhi@gmail.com'),
+(10,110,204,'uday','srivan','uday@gmail.com');
 
 INSERT INTO company_policy VALUES
 (1,'Covers transport damage'),
@@ -24,6 +30,11 @@ INSERT INTO company_policy VALUES
 (8,'Covers international shipments'),
 (9,'Covers delay compensation'),
 (10,'Covers damaged product');
+
+INSERT INTO notify_message VALUES
+(1,'Your claim has been accepted and the payment has been successfully credited to your account.'),
+(2,'Your claim is currently under review. Please wait for further updates.'),
+(3,'Your claim has been rejected. Please contact support for more details.');
 
 INSERT INTO claim(claim_id, claim_status, claim_type, claim_date,shipment_id, policy_id) VALUES
 (1,'Pending','transport Damage','2026-02-10',1,1),
@@ -140,10 +151,53 @@ INSERT INTO claim_histroy(claim_id,decision_id)
 SELECT claim_id,decision_id FROM
 decision WHERE decision_status = 'Approved'
 
+--task 9 update payments
+
+INSERT INTO payment (decision_id,agency_id,total_amount,payment_status) 
+SELECT d.decision_id,s.agency_id,total_amount = approved_amount+extra_amount,
+CASE 
+	WHEN (decision_id%2 = 0 ) THEN 'paid'
+	else 'pending'
+	END AS payment_status
+FROM decision d
+JOIN claim c on d.claim_id = c.claim_id
+JOIN shipment s on c.shipment_id = s.shipment_id
+WHERE decision_status = 'Approved'
+
+-- task 10 updating notifications
+
+INSERT INTO notification (shipment_id, decision_id, notify_message_id)
+SELECT 
+    c.shipment_id,
+    d.decision_id,
+    CASE 
+        WHEN d.decision_status = 'Approved' THEN 1
+        WHEN d.decision_status = 'Pending' THEN 2
+        WHEN d.decision_status = 'Rejected' THEN 3
+    END
+FROM decision d
+JOIN claim c ON d.claim_id = c.claim_id;
+
+-- task 11 updating tracker
+INSERT INTO tracker
+(agency_id,batch_no,company_name,customer_name,customer_email,policy_desc,claimed_amount,decision_status,approved_amount,payment_status,shipment_id,claim_id,decision_id)
+SELECT sa.agency_id,sa.batch_no,sa.comany_name,s.customer_name,s.customer_email,cp.policy_desc,c.claimed_amount,d.decision_status,d.approved_amount,p.payment_status,
+    s.shipment_id,c.claim_id,d.decision_id
+FROM shipment_agency sa
+JOIN shipment s ON sa.agency_id = s.agency_id
+JOIN claim c ON s.shipment_id = c.shipment_id
+JOIN company_policy cp ON c.policy_id = cp.policy_id
+JOIN decision d ON c.claim_id = d.claim_id
+LEFT JOIN payment p ON d.decision_id = p.decision_id;
+
+SELECT * FROM shipment_agency
 SELECT * FROM shipment
 SELECT * FROM company_policy
 SELECT * FROM claim
 SELECT * FROM evidence
 SELECT * FROM decision
 SELECT * FROM claim_histroy
-
+SELECT * FROM notify_message
+SELECT * FROM notification
+SELECT * FROM payment
+SELECT * FROM tracker

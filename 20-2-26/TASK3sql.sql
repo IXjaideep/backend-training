@@ -6,8 +6,7 @@ FROM claim
 
 -- TASK 4 Find claims where the approved amount is less than the claimed amount. 
 
-SELECT *,
-FROM claim c 
+SELECT * FROM claim c 
 JOIN decision d ON d.claim_id = c.claim_id
 WHERE d.approved_amount < c.claimed_amount
 
@@ -28,4 +27,5 @@ WHERE DATEDIFF(DAY,c.claim_date,GETDATE()) >= 30 AND d.decision_status = 'pendin
 SELECT shipment_id,SUM(claimed_amount)
 FROM claim 
 GROUP BY shipment_id
+
 
