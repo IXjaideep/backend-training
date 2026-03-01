@@ -20,6 +20,9 @@ class info extends Employee{
     public int getSalary(){
         return monthlySalary;
     }
+    public void empDetails() {
+        displayEmployeeDetails();
+    }
     public void displayEmployeeDetails(){
         System.out.println("employee detail's :");
         System.out.println("id :"+getId());
@@ -32,5 +35,4 @@ class info extends Employee{
     static void companyName(String company){
         System.out.println("Company Name :" + company);   
     }
-
 }
