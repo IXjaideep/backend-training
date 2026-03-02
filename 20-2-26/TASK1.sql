@@ -21,7 +21,7 @@ CREATE TABLE shipment(
 CREATE TABLE company_policy(
 	policy_id INT PRIMARY KEY,
 	policy_desc VARCHAR(100),
-	);
+);
 
 CREATE TABLE claim(
 	claim_id INT PRIMARY KEY,
