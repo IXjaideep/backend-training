@@ -26,10 +26,10 @@ public class StudentController {
         List<Student> students = repo.findByName(name);
 
         if (students.isEmpty()) {
-            return ResponseEntity.notFound().build(); // 404
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(students); // 200
+        return ResponseEntity.ok(students);
     }
 
     @GetMapping("/marks/{marks}")
@@ -38,9 +38,9 @@ public class StudentController {
         List<Student> students = repo.findStudentsWithMarksGreaterThan(marks);
 
         if (students.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204
+            return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(students); // 200
+        return ResponseEntity.ok(students); 
     }
 }
